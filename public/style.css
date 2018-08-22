@@ -1,4 +1,6 @@
-
+body {
+	font-family: 'Dosis', sans-serif;
+}
 
 #triTop {
 font-size: 0px; line-height: 0%; width: 0px;
@@ -19,44 +21,26 @@ top: 0;
 }
 
 .container h1 {
-	font-size: 2.2rem;
+	font-size: 3rem;
 }
 
 .container .lead {
-	font-size: 1.5rem;
+	font-size: 2rem;
 
 }
 
 .card {
-	border-style:groove;
+	border-style: groove;
   background: rgb(255, 255, 230, 0.5);
 	border-color: white;
 	border-size: 1.5px;
 	width: 92%;
-	height: 250px;
+	height: 40%;
 	padding: 10px;
 	margin: 5%;
-}
-/*
-.cardLine1 .card,
-.cardLine2 .card {
-	margin: 10px;
-	display: inline-block;
-	float: left;
+	font-weight: 600;
 }
 
-.cardLine2 .card {
-	width: 35%;
-}
-
-.cardLine1 {
-margin-left: 10%;
-}
-
-.cardLine2 {
-	margin-left: 30%;
-}
-*/
 #footer {
 	clear: both;
   position: absolute;
@@ -80,15 +64,16 @@ left: 0;
 bottom: 0;	
 }
 .card-title {
-	 font-size: 1.8rem;
+	 font-size: 2.5rem;
 	 margin-top: -10px;
 	 margin-bottom: -10px;
+	 text-align: center;
 }	
 
 .card-text {
-	 font-size: 1.5rem;
+	 font-size: 2.2rem;
 	 margin-bottom: 0px;
 }
 #btn-primary-1 {
-	font-size: 1.2rem;
+	font-size: 2rem;
 }

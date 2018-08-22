@@ -13,7 +13,7 @@ $.getJSON("/articles", function(data) {
     function displayArticle() {
         // Display the apropos information on the page
         $("#card-title-1").html(data[count].title);
-        $("#card-text-1").html(data[count].body + "<hr> published on: " + data[count].datePublish + " by: " + data[count].author
+        $("#card-text-1").html(data[count].body + "<hr> Published on: " + data[count].datePublish + " by: " + data[count].author
         + "<br> For more, go to the original website:");
         //$("#card-text-1").append("<hr>");
        // $("#card-text-1").append("For more, go to the original website:");
@@ -23,7 +23,7 @@ $.getJSON("/articles", function(data) {
 
     function nextArticle() {
     	count++;
-    	$("#card-title-1").html(data[0].title);
+    	$("#card-title-1").html(data[count].title);
     	setTimeout(displayArticle, 1000);
     	if (count === data.length) {
     		count = 0;
@@ -31,7 +31,7 @@ $.getJSON("/articles", function(data) {
     }
 
     function startSlideShow() {
-    	showArticle = setInterval(nextArticle, 3000)
+    	showArticle = setInterval(nextArticle, 7000)
     }
 
     startSlideShow();

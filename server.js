@@ -26,10 +26,17 @@ mongoose.connect(MONGODB_URI);
 
 app.get("/scrape", function(req, res) {
     var url1 = "https://blog.erratasec.com/";
+    var url2 = "https://krebsonsecurity.com/";
+
+
     axios.get(url1).then(function(response) {
+
+
         var $ = cheerio.load(response.data);
         $(".date-outer").each(function(i, element) {
-        	var articleErratasecArray = [];
+
+            var articleEArray = [];
+
             var title = $(element).find(".entry-title a");
             titleText = title.text();
             titleNeat = titleText.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
@@ -46,35 +53,87 @@ app.get("/scrape", function(req, res) {
             bodyNeat = bodyText.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
 
             var articleErratasec = {
-            	url: url1,
+                url: url1,
                 title: titleNeat,
                 datePublish: datePublishText,
                 author: authorNeat,
                 body: bodyNeat.substr(0, 550)
             };
 
-            articleErratasecArray.push(articleErratasec);
+            articleEArray.push(articleErratasec);
 
-            db.Article.create(articleErratasecArray)
+            db.Article.create(articleEArray)
                 .then(function(dbArticle) {
-                    // If saved successfully, print the new document to the console
-                    console.log(dbArticle);
+                    // If saved successfully, send the the new User document to the client
+                    res.json(dbArticle);
                 })
                 .catch(function(err) {
-                    // If an error occurs, print it to the console
-                    return res.json(err);
+                    // If an error occurs, send the error to the client
+                    res.json(err);
                 });
         });
+        //res.send("Scrape Complete");
 
-        res.send("Scrape Complete");
-       // res.send(articleErratasecArray[0].title);
+
     });
 
-    //console.log(articleErratasecArray);
-    //console.log(articleErratasecArray[0].title);
+
+
+    // res.send("Scrape 1 Complete");
+    // res.send(articleErratasecArray[0].title);
+    //});
+    axios.get(url2).then(function(response) {
+        var articleKArray = [];
+        var $ = cheerio.load(response.data);
+        $(".post-smallerfont").each(function(i, element) {
+            var authorNeat = "Kirsto Clerix"
+            var title = $(element).find(".post-title a");
+            titleText = title.text();
+            titleNeat = titleText.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+
+            var datePublish = $(element).find("small");
+            datePublishText = datePublish.text().trim();
+
+            var body = $(element).find(".entry");
+            bodyText = body.text();
+            bodyNeat = bodyText.replace(/(\r\n|\n|\r|\t|\s+)/gm, " ").trim();
+
+            var articleKirsto = {
+                url: url2,
+                title: titleNeat,
+                datePublish: datePublishText,
+                author: authorNeat,
+                body: bodyNeat.substr(0, 550)
+            };
+
+
+            articleKArray.push(articleKirsto);
+            console.log(articleKirsto);
+
+            db.Article.create(articleKArray);
+
+            res.send("Scrape 2 Complete");
+        });
+
+    });
+
+
+    // res.send(articleErratasecArray[0].title);
 });
 
 
+
+app.get("/delete", function(req, res) {
+    db.Article.remove({})
+        .then(function(dbArticle) {
+            // If saved successfully, send the the new User document to the client
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            // If an error occurs, send the error to the client
+            res.json(err);
+        });
+});
 
 app.get("/articles", function(req, res) {
     db.Article.find({})

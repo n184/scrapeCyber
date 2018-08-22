@@ -13,7 +13,7 @@ var ArticleSchema = new Schema({
   },
   // `datePublish` is required and of type String
   datePublish: {
-    type: Date,
+    type: String,
     required: true
   },
     // `title` is required and of type String
